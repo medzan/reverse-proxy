@@ -1,0 +1,68 @@
+plugins {
+    id 'org.springframework.boot' version '2.2.4.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+    id 'java'
+}
+group 'com.kapelse'
+version '0.0.1-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+
+    compile group: 'com.squareup.okhttp3', name: 'okhttp', version: '4.2.2'
+    compile group: 'org.apache.commons', name: 'commons-collections4', version: '4.4'
+
+    compile 'org.apache.httpcomponents:httpclient:4.5.2'
+    compile 'org.apache.commons:commons-lang3:3.4'
+    compile 'commons-io:commons-io:2.4'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-webflux'
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+    }
+}
+
+ext {
+    targetDir = "${projectDir}/src/main/java"
+}
+
+if (properties.release.toBoolean()) {
+    version = version.replace('-SNAPSHOT', '')
+}
+
+test {
+    useJUnitPlatform()
+}
+
+build {
+    doLast {
+        pom {
+            project {
+                inceptionYear '2020'
+                licenses {
+                    license {
+                        name 'The Apache Software License, Version 2.0'
+                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                        distribution "${artifactory_contextUrl}/maven-kapelse/${project.group.replaceAll('\\.', '/')}"
+                    }
+                }
+            }
+        }.writeTo("${buildDir}/libs/${rootProject.name}-${version}.pom")
+    }
+}
+
+task genCode {
+    doLast() {
+        ant.taskdef name: "xjc", classname: "com.sun.tools.xjc.XJCTask", classpath: configurations.jaxb.asPath
+
+        ant.xjc(destdir: targetDir, package: "com.kapelse.ktmp.soap.dto.poi", schema: "${projectDir}/src/main/resources/xsd/poi.xsd")
+        ant.xjc(destdir: targetDir, package: "com.kapelse.ktmp.soap.dto.ws", schema: "${projectDir}/src/main/resources/xsd/soap.xsd")
+        ant.xjc(destdir: targetDir, package: "com.kapelse.ktmp.soap.delegate.dto", schema: "${projectDir}/src/main/resources/wsdl/tms.wsdl") {
+            arg(value: '-wsdl')
+        }
+    }
+}
