@@ -1,59 +1,68 @@
 package com.kapelse.ktmp.configuration;
 
 
-import com.kapelse.ktmp.RequestQueueSender;
-import io.netty.channel.ChannelOption;
+import com.kapelse.ktmp.interceptor.HttpRequestInterceptor;
+import com.kapelse.ktmp.interceptor.RequestCommonHeadersRewriter;
+import com.kapelse.ktmp.interceptor.RequestForwardingInterceptor;
+import com.kapelse.ktmp.interceptor.RequestServerNameRewriter;
 import io.netty.handler.timeout.ReadTimeoutHandler;
 import io.netty.handler.timeout.WriteTimeoutHandler;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.client.reactive.ClientHttpConnector;
 import org.springframework.http.client.reactive.ReactorClientHttpConnector;
-import org.springframework.http.client.reactive.ReactorResourceFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
-import reactor.netty.http.client.HttpClient;
-import reactor.netty.tcp.TcpClient;
 
-import java.time.Duration;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 
-import static com.kapelse.ktmp.helpers.Utils.toMillis;
 import static io.netty.channel.ChannelOption.CONNECT_TIMEOUT_MILLIS;
 import static java.time.Duration.ofSeconds;
-import static java.util.concurrent.TimeUnit.MILLISECONDS;
+import static java.util.concurrent.TimeUnit.SECONDS;
+import static java.util.stream.Collectors.toList;
 import static org.springframework.web.reactive.function.client.WebClient.builder;
 import static reactor.netty.http.client.HttpClient.create;
 
 @Component
 public class WebClientProvider {
 
-    private WebClient webClient;
-    private Duration connection;
-    private Duration read;
-    private Duration write;
+    //webclient per uri
+    private ConcurrentHashMap<String, WebClient> webClientCache;
+    @Value("${webclient.timeout.connection}")
+    private long connection;
+    @Value("${webclient.timeout.read}")
+    private long read;
+    @Value("${webclient.timeout.write}")
+    private long write;
 
-    WebClientProvider( ) {
-        connection = ofSeconds(10);
-        read = ofSeconds(10);
-        write = ofSeconds(10);
-        webClient = buildWebClient();
+    WebClientProvider() {
+        webClientCache = new ConcurrentHashMap<>();
     }
-
-    private WebClient buildWebClient() {
-        return builder()
-                .clientConnector(createConnector())
-                .build();
-    }
-
 
     public ClientHttpConnector createConnector() {
-        return new ReactorClientHttpConnector(create() .followRedirect(false)
-                                                      .tcpConfiguration(client -> client.option(CONNECT_TIMEOUT_MILLIS, toMillis(connection))
-                                                        .doOnConnected(connection -> connection
-                                                        .addHandlerLast(new ReadTimeoutHandler(read.toMillis(), MILLISECONDS))
-                                                        .addHandlerLast(new WriteTimeoutHandler(write.toMillis(),
-                                                        MILLISECONDS)))));
-    }
-    public WebClient getDefaultWebClient() {
-        return webClient;
+        return new ReactorClientHttpConnector(create().followRedirect(false)
+                                                      .tcpConfiguration(client -> client.option(CONNECT_TIMEOUT_MILLIS,
+                                                                                                (int) ofSeconds(connection).toMillis())
+                                                       .doOnConnected(connection -> connection
+                                                       .addHandlerLast(new ReadTimeoutHandler(read, SECONDS))
+                                                       .addHandlerLast(new WriteTimeoutHandler(write, SECONDS)))));
     }
 
+    public WebClient getWebClient(String outgoingServer) {
+        return webClientCache.computeIfAbsent(outgoingServer, (uri) -> builder()
+                .filters(f -> f.addAll(createHttpRequestInterceptors(outgoingServer)))
+                .clientConnector(createConnector())
+                .build()
+        );
+    }
+
+    private List<HttpRequestInterceptor> createHttpRequestInterceptors(String outgoingServerUri) {
+        List<RequestForwardingInterceptor> requestForwardingInterceptors = new ArrayList<>();
+        requestForwardingInterceptors.add(new RequestServerNameRewriter(100, outgoingServerUri));
+        requestForwardingInterceptors.add(new RequestCommonHeadersRewriter(200));
+        return requestForwardingInterceptors.stream()
+                                            .map(HttpRequestInterceptor::new)
+                                            .collect(toList());
+    }
 }

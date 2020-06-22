@@ -1,9 +1,11 @@
 package com.kapelse.ktmp.configuration;
 
 import com.kapelse.ktmp.CachingFilter;
+import com.kapelse.ktmp.RequestMappingResolver;
 import com.kapelse.ktmp.RequestQueueSender;
 import com.kapelse.ktmp.ReverseProxyFilter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
@@ -16,6 +18,8 @@ public class ProxyConfiguration {
     private WebClientProvider webClientProvider;
     @Autowired
     private RequestQueueSender requestQueueSender;
+    @Autowired
+    private RequestMappingResolver requestMappingResolver;
 
     // Caching filter must have highest precedence over reverse proxy as is used to prepare the request
     @Bean
@@ -25,7 +29,8 @@ public class ProxyConfiguration {
 
     @Bean
     ReverseProxyFilter reverseProxyFilter() {
-        return new ReverseProxyFilter(Ordered.HIGHEST_PRECEDENCE + 1, webClientProvider, requestQueueSender);
+
+        return new ReverseProxyFilter(Ordered.HIGHEST_PRECEDENCE + 1, webClientProvider, requestQueueSender,requestMappingResolver);
     }
 
 

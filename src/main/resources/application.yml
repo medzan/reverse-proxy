@@ -1,0 +1,21 @@
+
+server:
+  port: 8081
+
+logging:
+  level:
+    root:  debug
+
+webclient:
+  timeout: # Time Unit as second
+    connection: 10
+    read: 10
+    write: 10
+
+mapping:
+  main:
+    "[/.*]": http://127.0.0.1:8080
+  backup:
+    "[/.*]": http://127.0.0.1:8880
+    "[/iaas/soap/.*]": http://127.0.0.1:9999
+
