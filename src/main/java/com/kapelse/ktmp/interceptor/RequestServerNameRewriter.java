@@ -19,10 +19,10 @@ public class RequestServerNameRewriter  implements RequestForwardingInterceptor 
     private int order;
     private URI outgoingServer;
 
-    public RequestServerNameRewriter(int order)  {
+    public RequestServerNameRewriter(int order, String outgoingServer)  {
         this.order = order;
         try {
-            this.outgoingServer = new URI("http://127.0.0.1:8080");
+            this.outgoingServer = new URI(outgoingServer);
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
