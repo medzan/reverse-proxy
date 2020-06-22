@@ -22,6 +22,9 @@ public class HttpRequest implements ClientRequest {
         delegate = request;
     }
 
+    public ClientRequest clientRequest(){
+        return delegate;
+    }
     @Override
     public URI url() {
         return delegate.url();
@@ -31,6 +34,9 @@ public class HttpRequest implements ClientRequest {
         delegate = from(delegate)
                 .url(url)
                 .build();
+    }
+    public HttpRequest clone(URI url){
+       return new HttpRequest(from(delegate).url(url).build());
     }
 
     @Override

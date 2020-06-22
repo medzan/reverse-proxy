@@ -1,6 +1,7 @@
 package com.kapelse.ktmp.interceptor;
 
 import com.kapelse.ktmp.RequestQueueSender;
+import com.kapelse.ktmp.configuration.WebClientProvider;
 import com.kapelse.ktmp.helpers.HttpRequest;
 import com.kapelse.ktmp.helpers.HttpRequestExecution;
 import com.kapelse.ktmp.helpers.HttpResponse;
@@ -25,9 +26,9 @@ public class RequestDuplicateSenderInterceptor implements RequestForwardingInter
     public Mono<HttpResponse> forward(HttpRequest request, HttpRequestExecution execution) {
         log.trace("[Start] Request duplication sending ");
         //TODO Its not working yet, cause read time out exception
-//        requestQueue.registerRequestDuplication(request);
         return execution.execute(request)
-                        .doOnSuccess(response -> log.trace("[End] Request duplication sending "));
+                        .doOnSuccess(response -> log.trace("[End] Request duplication sending "))
+                        .doFinally(s -> requestQueue.registerRequestDuplication(request));
     }
 
     @Override
