@@ -1,4 +1,4 @@
-package com.kapelse.ktmp.helpers;
+package com.kapelse.ktmp.handler;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -14,6 +14,9 @@ import java.util.Map;
 
 import static org.springframework.web.reactive.function.client.ClientRequest.from;
 
+/**
+ * @author ZANGUI Elmehdi
+ */
 public class HttpRequest implements ClientRequest {
 
     private ClientRequest delegate;
@@ -22,9 +25,6 @@ public class HttpRequest implements ClientRequest {
         delegate = request;
     }
 
-    public ClientRequest clientRequest(){
-        return delegate;
-    }
     @Override
     public URI url() {
         return delegate.url();
@@ -35,19 +35,9 @@ public class HttpRequest implements ClientRequest {
                 .url(url)
                 .build();
     }
-    public HttpRequest clone(URI url){
-       return new HttpRequest(from(delegate).url(url).build());
-    }
-
     @Override
     public HttpMethod method() {
         return delegate.method();
-    }
-
-    public void setMethod(HttpMethod method) {
-        delegate = from(delegate)
-                .method(method)
-                .build();
     }
 
     @Override
@@ -72,12 +62,6 @@ public class HttpRequest implements ClientRequest {
     @Override
     public BodyInserter<?, ? super ClientHttpRequest> body() {
         return delegate.body();
-    }
-
-    public void setBody(BodyInserter<?, ? super ClientHttpRequest> body) {
-        delegate = from(delegate)
-                .body(body)
-                .build();
     }
 
     @Override

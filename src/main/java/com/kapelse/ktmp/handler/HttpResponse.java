@@ -1,7 +1,6 @@
-package com.kapelse.ktmp.helpers;
+package com.kapelse.ktmp.handler;
 
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
@@ -16,21 +15,14 @@ import reactor.core.publisher.Mono;
 
 import java.util.List;
 
-import static com.kapelse.ktmp.helpers.Utils.copyHeaders;
-import static org.springframework.web.reactive.function.client.ClientResponse.create;
-import static org.springframework.web.reactive.function.client.ClientResponse.from;
-import static reactor.core.publisher.Mono.empty;
-import static reactor.core.publisher.Mono.just;
+/**
+ * @author ZANGUI Elmehdi
+ */
 
 public class HttpResponse implements ClientResponse {
 
     private Mono<byte[]> body;
     private ClientResponse delegate;
-
-    public HttpResponse(HttpStatus status) {
-        body = empty();
-        delegate = create(status).build();
-    }
 
     HttpResponse(ClientResponse response) {
         body = response.bodyToMono(byte[].class); // Releases connection
@@ -47,24 +39,9 @@ public class HttpResponse implements ClientResponse {
         return delegate.rawStatusCode();
     }
 
-    public void setStatusCode(HttpStatus status) {
-        delegate = from(delegate)
-                .statusCode(status)
-                .build();
-    }
-
     @Override
     public Headers headers() {
         return delegate.headers();
-    }
-
-    public void setHeaders(HttpHeaders headers) {
-        delegate = from(delegate)
-                .headers(httpHeaders -> {
-                    httpHeaders.clear();
-                    httpHeaders.putAll(headers);
-                })
-                .build();
     }
 
     @Override
@@ -81,12 +58,6 @@ public class HttpResponse implements ClientResponse {
         return body;
     }
 
-    public void setBody(byte[] body) {
-        this.body = just(body);
-        HttpHeaders rewrittenHeaders = copyHeaders(delegate.headers().asHttpHeaders());
-        rewrittenHeaders.setContentLength(body.length);
-        setHeaders(rewrittenHeaders);
-    }
 
     @Override
     public <T> T body(BodyExtractor<T, ? super ClientHttpResponse> extractor) {
@@ -116,32 +87,32 @@ public class HttpResponse implements ClientResponse {
 
     @Override
     public <T> Flux<T> bodyToFlux(ParameterizedTypeReference<T> typeReference) {
-        throw  new IllegalStateException("Method not implemented");
+        throw new IllegalStateException("Method not implemented");
     }
 
     @Override
     public Mono<Void> releaseBody() {
-        throw  new IllegalStateException("Method not implemented");
+        throw new IllegalStateException("Method not implemented");
     }
 
     @Override
     public <T> Mono<ResponseEntity<T>> toEntity(Class<T> bodyType) {
-        throw  new IllegalStateException("Method not implemented");
+        throw new IllegalStateException("Method not implemented");
     }
 
     @Override
     public <T> Mono<ResponseEntity<T>> toEntity(ParameterizedTypeReference<T> typeReference) {
-        throw  new IllegalStateException("Method not implemented");
+        throw new IllegalStateException("Method not implemented");
     }
 
     @Override
     public <T> Mono<ResponseEntity<List<T>>> toEntityList(Class<T> elementType) {
-        throw  new IllegalStateException("Method not implemented");
+        throw new IllegalStateException("Method not implemented");
     }
 
     @Override
     public <T> Mono<ResponseEntity<List<T>>> toEntityList(ParameterizedTypeReference<T> typeReference) {
-        throw  new IllegalStateException("Method not implemented");
+        throw new IllegalStateException("Method not implemented");
     }
 
     @Override

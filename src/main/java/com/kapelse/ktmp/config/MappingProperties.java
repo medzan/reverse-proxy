@@ -1,4 +1,4 @@
-package com.kapelse.ktmp.configuration;
+package com.kapelse.ktmp.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -7,21 +7,25 @@ import org.springframework.context.annotation.Configuration;
 import java.util.HashMap;
 import java.util.regex.Pattern;
 
+/**
+ * @author ZANGUI Elmehdi
+ */
+
 @Configuration
 @EnableConfigurationProperties(MappingProperties.class)
 @ConfigurationProperties(prefix = "mapping")
 public class MappingProperties {
 
-    private HashMap<Pattern, String> main;
+    private HashMap<Pattern, String> primary;
     private HashMap<Pattern, String> backup;
 
 
-    public HashMap<Pattern, String> getMain() {
-        return main;
+    public HashMap<Pattern, String> getPrimary() {
+        return primary;
     }
 
-    public void setMain(HashMap<Pattern, String> main) {
-        this.main = main;
+    public void setPrimary(HashMap<Pattern, String> primary) {
+        this.primary = primary;
     }
 
     public HashMap<Pattern, String> getBackup() {

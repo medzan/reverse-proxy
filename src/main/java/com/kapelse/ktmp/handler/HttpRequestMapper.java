@@ -1,4 +1,4 @@
-package com.kapelse.ktmp.helpers;
+package com.kapelse.ktmp.handler;
 
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.HttpHeaders;
@@ -11,6 +11,10 @@ import reactor.core.publisher.Flux;
 import java.net.URI;
 
 import static org.springframework.web.reactive.function.BodyInserters.fromDataBuffers;
+
+/**
+ * @author ZANGUI Elmehdi
+ */
 
 public class HttpRequestMapper {
 

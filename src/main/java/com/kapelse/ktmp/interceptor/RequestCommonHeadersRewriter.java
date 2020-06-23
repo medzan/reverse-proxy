@@ -1,8 +1,8 @@
 package com.kapelse.ktmp.interceptor;
 
-import com.kapelse.ktmp.helpers.HttpRequest;
-import com.kapelse.ktmp.helpers.HttpRequestExecution;
-import com.kapelse.ktmp.helpers.HttpResponse;
+import com.kapelse.ktmp.handler.HttpRequest;
+import com.kapelse.ktmp.handler.HttpRequestExecution;
+import com.kapelse.ktmp.handler.HttpResponse;
 import org.slf4j.Logger;
 import org.springframework.http.HttpHeaders;
 import reactor.core.publisher.Mono;
@@ -12,16 +12,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
-import static com.kapelse.ktmp.helpers.Utils.copyHeaders;
 import static java.lang.String.valueOf;
 import static org.apache.commons.collections4.CollectionUtils.emptyIfNull;
 import static org.slf4j.LoggerFactory.getLogger;
 import static org.springframework.http.HttpHeaders.*;
-import static org.springframework.http.HttpHeaders.SERVER;
 
 /**
  * Prepare the next transmitted request by rewriting the headers
  * this main functionality is a duplicate of what it used by any reverse proxy project
+ *
+ * @author ZANGUI Elmehdi
  */
 public class RequestCommonHeadersRewriter implements RequestForwardingInterceptor {
 
@@ -41,9 +41,9 @@ public class RequestCommonHeadersRewriter implements RequestForwardingIntercepto
     @Override
     public Mono<HttpResponse> forward(HttpRequest request, HttpRequestExecution execution) {
         log.trace("[Start] Request Common headers rewriting ");
-        rewriteHeaders(request.headers(), request.url(),request::setHeaders);
+        rewriteHeaders(request.headers(), request.url(), request::setHeaders);
         return execution.execute(request)
-                .doOnSuccess(response ->    log.trace("[End] Request Common headers rewriting "));
+                        .doOnSuccess(response -> log.trace("[End] Request Common headers rewriting "));
     }
 
     @Override
@@ -72,12 +72,19 @@ public class RequestCommonHeadersRewriter implements RequestForwardingIntercepto
         headersSetter.accept(rewrittenHeaders);
         log.debug("Request headers rewritten from {} to {}", headers, rewrittenHeaders);
     }
+
     private String resolvePort(URI uri) {
         int port = uri.getPort();
         if (port < 0) {
             port = uri.getScheme().equals("https") ? 443 : 80;
         }
         return valueOf(port);
+    }
+
+    private HttpHeaders copyHeaders(HttpHeaders headers) {
+        HttpHeaders copy = new HttpHeaders();
+        copy.putAll(headers);
+        return copy;
     }
 
 }

@@ -1,13 +1,15 @@
-package com.kapelse.ktmp;
+package com.kapelse.ktmp.filter;
 
-import com.kapelse.ktmp.decorator.CustomServerWebExchangeDecorator;
+import com.kapelse.ktmp.filter.decorator.CustomServerWebExchangeDecorator;
 import org.springframework.boot.web.reactive.filter.OrderedWebFilter;
 import org.springframework.web.server.ServerWebExchange;
 import org.springframework.web.server.WebFilterChain;
 import reactor.core.publisher.Mono;
 
+/**
+ * @author ZANGUI Elmehdi
+ */
 public class CachingFilter implements OrderedWebFilter {
-
 
     private int order;
 

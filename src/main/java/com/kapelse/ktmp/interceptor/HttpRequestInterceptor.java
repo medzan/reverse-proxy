@@ -1,12 +1,16 @@
 package com.kapelse.ktmp.interceptor;
 
-import com.kapelse.ktmp.helpers.HttpRequest;
-import com.kapelse.ktmp.helpers.HttpRequestExecution;
+import com.kapelse.ktmp.handler.HttpRequest;
+import com.kapelse.ktmp.handler.HttpRequestExecution;
 import org.springframework.web.reactive.function.client.ClientRequest;
 import org.springframework.web.reactive.function.client.ClientResponse;
 import org.springframework.web.reactive.function.client.ExchangeFilterFunction;
 import org.springframework.web.reactive.function.client.ExchangeFunction;
 import reactor.core.publisher.Mono;
+
+/**
+ * @author ZANGUI Elmehdi
+ */
 
 public class HttpRequestInterceptor implements ExchangeFilterFunction {
 

@@ -1,4 +1,4 @@
-package com.kapelse.ktmp.configuration;
+package com.kapelse.ktmp.filter;
 
 
 import com.kapelse.ktmp.interceptor.HttpRequestInterceptor;
@@ -23,6 +23,10 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 import static java.util.stream.Collectors.toList;
 import static org.springframework.web.reactive.function.client.WebClient.builder;
 import static reactor.netty.http.client.HttpClient.create;
+
+/**
+ * @author ZANGUI Elmehdi
+ */
 
 @Component
 public class WebClientProvider {

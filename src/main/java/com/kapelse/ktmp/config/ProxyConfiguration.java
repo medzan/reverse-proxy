@@ -1,14 +1,14 @@
-package com.kapelse.ktmp.configuration;
+package com.kapelse.ktmp.config;
 
-import com.kapelse.ktmp.CachingFilter;
-import com.kapelse.ktmp.RequestMappingResolver;
-import com.kapelse.ktmp.RequestQueueSender;
-import com.kapelse.ktmp.ReverseProxyFilter;
+import com.kapelse.ktmp.filter.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
+
+/**
+ * @author ZANGUI Elmehdi
+ */
 
 @Configuration
 public class ProxyConfiguration {
@@ -30,7 +30,7 @@ public class ProxyConfiguration {
     @Bean
     ReverseProxyFilter reverseProxyFilter() {
 
-        return new ReverseProxyFilter(Ordered.HIGHEST_PRECEDENCE + 1, webClientProvider, requestQueueSender,requestMappingResolver);
+        return new ReverseProxyFilter(Ordered.HIGHEST_PRECEDENCE + 1, webClientProvider, requestQueueSender, requestMappingResolver);
     }
 
 

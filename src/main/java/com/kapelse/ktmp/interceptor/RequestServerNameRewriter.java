@@ -1,8 +1,8 @@
 package com.kapelse.ktmp.interceptor;
 
-import com.kapelse.ktmp.helpers.HttpRequest;
-import com.kapelse.ktmp.helpers.HttpRequestExecution;
-import com.kapelse.ktmp.helpers.HttpResponse;
+import com.kapelse.ktmp.handler.HttpRequest;
+import com.kapelse.ktmp.handler.HttpRequestExecution;
+import com.kapelse.ktmp.handler.HttpResponse;
 import org.slf4j.Logger;
 import reactor.core.publisher.Mono;
 
@@ -12,6 +12,10 @@ import java.util.function.Consumer;
 
 import static org.slf4j.LoggerFactory.getLogger;
 import static org.springframework.web.util.UriComponentsBuilder.fromUri;
+
+/**
+ * @author ZANGUI Elmehdi
+ */
 
 public class RequestServerNameRewriter  implements RequestForwardingInterceptor {
 

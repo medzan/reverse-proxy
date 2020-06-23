@@ -13,7 +13,7 @@ webclient:
     write: 10
 
 mapping:
-  main:
+  primary:
     "[/.*]": http://127.0.0.1:8080
   backup:
     "[/.*]": http://127.0.0.1:8880

@@ -1,13 +1,8 @@
-package com.kapelse.ktmp;
+package com.kapelse.ktmp.filter;
 
-import com.kapelse.ktmp.configuration.WebClientProvider;
-import com.kapelse.ktmp.decorator.CachingServerHttpRequestDecorator;
-import com.kapelse.ktmp.helpers.HttpRequestMapper;
-import com.kapelse.ktmp.helpers.HttpResponseMapper;
-import com.kapelse.ktmp.interceptor.HttpRequestInterceptor;
-import com.kapelse.ktmp.interceptor.RequestCommonHeadersRewriter;
-import com.kapelse.ktmp.interceptor.RequestForwardingInterceptor;
-import com.kapelse.ktmp.interceptor.RequestServerNameRewriter;
+import com.kapelse.ktmp.filter.decorator.CachingServerHttpRequestDecorator;
+import com.kapelse.ktmp.handler.HttpRequestMapper;
+import com.kapelse.ktmp.handler.HttpResponseMapper;
 import org.springframework.boot.web.reactive.filter.OrderedWebFilter;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.util.Assert;
@@ -16,11 +11,9 @@ import org.springframework.web.server.ServerWebExchange;
 import org.springframework.web.server.WebFilterChain;
 import reactor.core.publisher.Mono;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import static java.util.stream.Collectors.toList;
-
+/**
+ * @author ZANGUI Elmehdi
+ */
 public class ReverseProxyFilter implements OrderedWebFilter {
 
     private int order;
@@ -55,7 +48,7 @@ public class ReverseProxyFilter implements OrderedWebFilter {
         CachingServerHttpRequestDecorator request = (CachingServerHttpRequestDecorator) exchange.getRequest();
         ServerHttpResponse response = exchange.getResponse();
 
-        String outgoingServerUri = requestMappingResolver.resolveMainMapping(request);
+        String outgoingServerUri = requestMappingResolver.resolvePrimaryMapping(request.getPath().value());
         WebClient webClient = webClientProvider.getWebClient(outgoingServerUri);
 
         return webClient.method(httpRequestMapper.extractMethod(request))
