@@ -57,14 +57,3 @@ build {
     }
 }
 
-task genCode {
-    doLast() {
-        ant.taskdef name: "xjc", classname: "com.sun.tools.xjc.XJCTask", classpath: configurations.jaxb.asPath
-
-        ant.xjc(destdir: targetDir, package: "com.kapelse.ktmp.soap.dto.poi", schema: "${projectDir}/src/main/resources/xsd/poi.xsd")
-        ant.xjc(destdir: targetDir, package: "com.kapelse.ktmp.soap.dto.ws", schema: "${projectDir}/src/main/resources/xsd/soap.xsd")
-        ant.xjc(destdir: targetDir, package: "com.kapelse.ktmp.soap.delegate.dto", schema: "${projectDir}/src/main/resources/wsdl/tms.wsdl") {
-            arg(value: '-wsdl')
-        }
-    }
-}

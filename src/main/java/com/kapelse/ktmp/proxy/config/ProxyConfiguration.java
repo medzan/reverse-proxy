@@ -1,6 +1,6 @@
-package com.kapelse.ktmp.config;
+package com.kapelse.ktmp.proxy.config;
 
-import com.kapelse.ktmp.filter.*;
+import com.kapelse.ktmp.proxy.filter.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

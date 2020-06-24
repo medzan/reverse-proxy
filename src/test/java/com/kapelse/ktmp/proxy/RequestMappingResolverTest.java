@@ -1,7 +1,7 @@
-package com.kapelse.ktmp;
+package com.kapelse.ktmp.proxy;
 
-import com.kapelse.ktmp.config.MappingProperties;
-import com.kapelse.ktmp.filter.RequestMappingResolver;
+import com.kapelse.ktmp.proxy.config.MappingProperties;
+import com.kapelse.ktmp.proxy.filter.RequestMappingResolver;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;

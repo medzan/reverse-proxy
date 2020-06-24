@@ -1,4 +1,4 @@
-package com.kapelse.ktmp.config;
+package com.kapelse.ktmp.proxy.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;

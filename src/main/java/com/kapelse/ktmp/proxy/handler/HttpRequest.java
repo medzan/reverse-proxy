@@ -1,4 +1,4 @@
-package com.kapelse.ktmp.handler;
+package com.kapelse.ktmp.proxy.handler;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;

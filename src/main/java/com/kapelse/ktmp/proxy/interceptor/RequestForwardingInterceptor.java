@@ -1,9 +1,9 @@
-package com.kapelse.ktmp.interceptor;
+package com.kapelse.ktmp.proxy.interceptor;
 
 
-import com.kapelse.ktmp.handler.HttpRequest;
-import com.kapelse.ktmp.handler.HttpRequestExecution;
-import com.kapelse.ktmp.handler.HttpResponse;
+import com.kapelse.ktmp.proxy.handler.HttpRequest;
+import com.kapelse.ktmp.proxy.handler.HttpRequestExecution;
+import com.kapelse.ktmp.proxy.handler.HttpResponse;
 import reactor.core.publisher.Mono;
 
 /**

@@ -1,4 +1,4 @@
-package com.kapelse.ktmp.handler;
+package com.kapelse.ktmp.proxy.handler;
 
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpStatus;

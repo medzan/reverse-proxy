@@ -1,10 +1,10 @@
-package com.kapelse.ktmp.filter;
+package com.kapelse.ktmp.proxy.filter;
 
 
-import com.kapelse.ktmp.interceptor.HttpRequestInterceptor;
-import com.kapelse.ktmp.interceptor.RequestCommonHeadersRewriter;
-import com.kapelse.ktmp.interceptor.RequestForwardingInterceptor;
-import com.kapelse.ktmp.interceptor.RequestServerNameRewriter;
+import com.kapelse.ktmp.proxy.interceptor.HttpRequestInterceptor;
+import com.kapelse.ktmp.proxy.interceptor.RequestCommonHeadersRewriter;
+import com.kapelse.ktmp.proxy.interceptor.RequestForwardingInterceptor;
+import com.kapelse.ktmp.proxy.interceptor.RequestServerNameRewriter;
 import io.netty.handler.timeout.ReadTimeoutHandler;
 import io.netty.handler.timeout.WriteTimeoutHandler;
 import org.springframework.beans.factory.annotation.Value;

@@ -1,4 +1,4 @@
-package com.kapelse.ktmp.filter.decorator;
+package com.kapelse.ktmp.proxy.filter.decorator;
 
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpRequestDecorator;

@@ -1,6 +1,6 @@
-package com.kapelse.ktmp.filter;
+package com.kapelse.ktmp.proxy.filter;
 
-import com.kapelse.ktmp.config.MappingProperties;
+import com.kapelse.ktmp.proxy.config.MappingProperties;
 import org.slf4j.Logger;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;

@@ -1,4 +1,4 @@
-package com.kapelse.ktmp.handler;
+package com.kapelse.ktmp.proxy.handler;
 
 import io.netty.channel.ChannelException;
 import org.slf4j.Logger;

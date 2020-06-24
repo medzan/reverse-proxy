@@ -1,7 +1,7 @@
-package com.kapelse.ktmp.filter;
+package com.kapelse.ktmp.proxy.filter;
 
-import com.kapelse.ktmp.filter.decorator.CachingServerHttpRequestDecorator;
-import com.kapelse.ktmp.handler.HttpRequestMapper;
+import com.kapelse.ktmp.proxy.filter.decorator.CachingServerHttpRequestDecorator;
+import com.kapelse.ktmp.proxy.handler.HttpRequestMapper;
 import org.slf4j.Logger;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;

@@ -1,8 +1,8 @@
-package com.kapelse.ktmp.filter;
+package com.kapelse.ktmp.proxy.filter;
 
-import com.kapelse.ktmp.filter.decorator.CachingServerHttpRequestDecorator;
-import com.kapelse.ktmp.handler.HttpRequestMapper;
-import com.kapelse.ktmp.handler.HttpResponseMapper;
+import com.kapelse.ktmp.proxy.filter.decorator.CachingServerHttpRequestDecorator;
+import com.kapelse.ktmp.proxy.handler.HttpRequestMapper;
+import com.kapelse.ktmp.proxy.handler.HttpResponseMapper;
 import org.springframework.boot.web.reactive.filter.OrderedWebFilter;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.util.Assert;

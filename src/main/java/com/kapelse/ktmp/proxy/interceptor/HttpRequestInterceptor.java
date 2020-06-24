@@ -1,7 +1,7 @@
-package com.kapelse.ktmp.interceptor;
+package com.kapelse.ktmp.proxy.interceptor;
 
-import com.kapelse.ktmp.handler.HttpRequest;
-import com.kapelse.ktmp.handler.HttpRequestExecution;
+import com.kapelse.ktmp.proxy.handler.HttpRequest;
+import com.kapelse.ktmp.proxy.handler.HttpRequestExecution;
 import org.springframework.web.reactive.function.client.ClientRequest;
 import org.springframework.web.reactive.function.client.ClientResponse;
 import org.springframework.web.reactive.function.client.ExchangeFilterFunction;

@@ -1,6 +1,6 @@
-package com.kapelse.ktmp.filter;
+package com.kapelse.ktmp.proxy.filter;
 
-import com.kapelse.ktmp.filter.decorator.CustomServerWebExchangeDecorator;
+import com.kapelse.ktmp.proxy.filter.decorator.CustomServerWebExchangeDecorator;
 import org.springframework.boot.web.reactive.filter.OrderedWebFilter;
 import org.springframework.web.server.ServerWebExchange;
 import org.springframework.web.server.WebFilterChain;
