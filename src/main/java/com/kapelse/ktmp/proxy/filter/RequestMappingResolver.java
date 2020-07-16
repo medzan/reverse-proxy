@@ -41,11 +41,14 @@ public class RequestMappingResolver {
 
     private Set<Endpoint> resolve(HashMap<Pattern, String> mapping, String uri) {
         Set<Endpoint> candidates = new HashSet<>();
-        mapping.forEach((pathRegex, endpointProperty) -> {
-            if (pathRegex.matcher(uri).matches()) {
-                candidates.add(new Endpoint(pathRegex, endpointProperty));
-            }
-        });
+        if (mapping != null) {
+            mapping.forEach((pathRegex, endpointProperty) -> {
+                if (pathRegex.matcher(uri).matches()) {
+                    candidates.add(new Endpoint(pathRegex, endpointProperty));
+                }
+            });
+        }
+
         return candidates;
     }
 

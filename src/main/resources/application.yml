@@ -1,6 +1,6 @@
 
 server:
-  port: 8081
+  port: 8080
 
 logging:
   level:
@@ -15,7 +15,5 @@ webclient:
 mapping:
   primary:
     "[/.*]": http://127.0.0.1:8080
-  backup:
-    "[/.*]": http://127.0.0.1:8880
-    "[/iaas/soap/.*]": http://127.0.0.1:9999
+
 
