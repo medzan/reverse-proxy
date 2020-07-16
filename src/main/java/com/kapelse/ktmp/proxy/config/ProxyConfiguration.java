@@ -10,7 +10,7 @@ import org.springframework.core.Ordered;
  * @author ZANGUI Elmehdi
  */
 
-@Configuration
+//@Configuration
 public class ProxyConfiguration {
 
 

@@ -62,6 +62,16 @@ public class RequestMappingResolver {
                          .getUri();
     }
 
+    public HashMap<Pattern, String> getPrimaryMapping(){
+        return mappingProperties.getPrimary();
+    }
+    public HashMap<Pattern, String> getBackupMapping(){
+        if (mappingProperties.getBackup() == null) {
+            return new HashMap<>();
+        }
+        return mappingProperties.getBackup();
+    }
+
 
     static class Endpoint {
         private Pattern pattern;

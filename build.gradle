@@ -21,6 +21,7 @@ dependencies {
     compile 'org.apache.commons:commons-lang3:3.4'
     compile 'commons-io:commons-io:2.4'
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-webflux'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
 
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
