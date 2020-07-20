@@ -3,6 +3,7 @@ package com.kapelse.ktmp.proxy.config;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.DependsOn;
 
 import java.util.HashMap;
 import java.util.regex.Pattern;
@@ -14,6 +15,7 @@ import java.util.regex.Pattern;
 @Configuration
 @EnableConfigurationProperties(MappingProperties.class)
 @ConfigurationProperties(prefix = "mapping")
+@DependsOn("externalPropertySourcesConfig")
 public class MappingProperties {
 
     private HashMap<Pattern, String> primary;

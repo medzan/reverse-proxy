@@ -36,28 +36,8 @@ ext {
     targetDir = "${projectDir}/src/main/java"
 }
 
-if (properties.release.toBoolean()) {
-    version = version.replace('-SNAPSHOT', '')
-}
-
 test {
     useJUnitPlatform()
 }
 
-build {
-    doLast {
-        pom {
-            project {
-                inceptionYear '2020'
-                licenses {
-                    license {
-                        name 'The Apache Software License, Version 2.0'
-                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-                        distribution "${artifactory_contextUrl}/maven-kapelse/${project.group.replaceAll('\\.', '/')}"
-                    }
-                }
-            }
-        }.writeTo("${buildDir}/libs/${rootProject.name}-${version}.pom")
-    }
-}
 
